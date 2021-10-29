@@ -1,8 +1,9 @@
-const todos = [
-  {text: 'Feed llama', done: true, _id: 125223},
-  {text: 'Sleep under the stars', done: false, _id: 127904},
-  {text: 'Buy milk', done: false, _id: 139608},
+const mediums = [
+  {text: "Charcoal", _id: 123 },
+  {text: "Oils", _id: 231},
+  {text: "Pastels", _id: 312},
 ]
+
 
 const find = (conditions, callback) => {
   // see if this works, if not, execute the code in the catch block
@@ -12,7 +13,7 @@ const find = (conditions, callback) => {
       throw new TypeError('Please pass in an object')
     }
     // If the object is empty, return all the todos
-    if (Object.keys(conditions).length === 0) return callback(null, todos)
+    if (Object.keys(conditions).length === 0) return callback(null, mediums)
 	// deal with errors
   } catch (error) {
     console.log(error)
@@ -22,39 +23,41 @@ const find = (conditions, callback) => {
 
 const findById = (id, callback) =>{
   try {
-    const todo = todos.find(todo => todo._id === parseInt(id))
-    if (!todo) throw new Error ('No todo was found')
-    return callback(null, todo)
+    const medium = mediums.find( medium => medium._id === parseInt(id))
+    if (!medium) throw new Error ('No todo was found')
+    return callback(null, medium)
   } catch (error) {
     console.log(error)
     return callback(error, null)
   }
 }
 
-function create(todo, callback) {
+function create(medium, callback) {
   // Add the id
-  todo._id = Date.now() % 1000000
+  medium._id = Date.now() % 1000000
   // New todos wouldn't be done
-  todo.done = false
-  todos.push(todo)
-  return callback(null, todo)
+  medium.done = false
+  mediums.push(medium)
+  return callback(null, medium)
 }
 
 function findByIdAndDelete(id, callback) {
   try { 
     // Find the index based on the _id of the todo object
-    const idx = todos.findIndex(todo => todo._id == parseInt(id))
-    const deletedTodo = todos.splice(idx, 1)
-    if (!deletedTodo.length ) throw new Error ('No todo was deleted')
-    return callback(null, deletedTodo[0])
+    const idx = mediums.findIndex(mediums => mediums._id == parseInt(id))
+    const deletedmediums = mediums.splice(idx, 1)
+    if (!deletedmediums.length ) throw new Error ('No todo was deleted')
+    return callback(null, deletedmediums[0])
   } catch(error) {
     return callback(error, null)
   }
 }
 
+
+
 export { 
 	find,
   findById,
   create,
-  findByIdAndDelete
+  findByIdAndDelete,
 }
